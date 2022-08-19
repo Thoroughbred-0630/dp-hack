@@ -1,21 +1,28 @@
+@charset "utf-8";
+
 * {
   box-sizing: border-box;
 }
 
 header {
+  padding-left: 20px;
   padding-bottom: 10px;
   border-bottom: 2px solid #ccc;
   margin-bottom: 80px;
 }
 
+header a {
+  text-decoration: none;
+  color: rgb(26, 67, 148);
+}
+
 h2 {
   text-align: center;
+  color: rgb(26, 67, 148);
 }
 
 .container {
-  border: 3px solid black;
   width: 800px;
-  height: 500px;
   margin: 0 auto;
 }
 
@@ -25,5 +32,52 @@ h2 {
 
 #map {
   width: 100%;
-  border: 1px solid blue;
+  height: 400px;
+  margin: 0 auto;
+}
+
+.means-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+button.update {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  width: 100px;
+  padding: 10px;
+  margin: 0 20px;
+  border: none;
+  transition: 0.2s;
+}
+
+button.update:hover {
+  opacity: 0.8;
+}
+
+button.update > img {
+  width: 80px;
+}
+
+button.update[data-viecle='セグウェイ'] {
+  color: rgb(77, 162, 194);
+}
+
+button.update[data-viecle='竹馬'] {
+  color: rgb(203, 52, 124);
+}
+button.update[data-viecle='かご'] {
+  color: rgb(230, 115, 71);
+}
+button.update[data-viecle='プテラノドン'] {
+  color: rgb(130, 42, 170);
+}
+
+.result {
+  font-size: 24px;
 }
