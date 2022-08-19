@@ -2,7 +2,7 @@ var FROM;
 var TO;
 //const FROM = "恵比寿駅";
 //const TO = "東京タワー"
-const TRAVELTRANS = {"セグウェイ": "DRIVING","竹馬": "WALKING", "かご": "BIKEWAY", "プテラノドン": "PUTERANODON"};
+const TRAVELTRANS = {"セグウェイ": "DRIVING","竹馬": "WALKING", "かご": "BICYCLING", "プテラノドン": "PUTERANODON"};
 const WAYPOINTS = {
     "セグウェイ": [{}],
     "竹馬": [{ location: "レントオールエドガワ"}],
