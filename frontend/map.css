@@ -15,7 +15,7 @@ header {
 }
 
 header {
-  border-bottom: 1px solid rgb(26, 67, 148);
+  border-bottom: 1px solid #ddd;
   margin-bottom: 40px;
 }
 
@@ -102,4 +102,14 @@ h2 {
   margin: 20px 0;
   color: rgb(26, 67, 148);
   text-align: center;
+}
+
+footer {
+  border-top: 1px solid #ddd;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  margin-top: 60px;
+  padding: 20px 0;
+  color: #999;
 }
