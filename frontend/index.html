@@ -10,17 +10,17 @@
   <body>
     <header>くるまっぷ</header>
     <div class="center">
-      <from>
+      <from action="map.html">
         <div class="flexed-text">
-          <h2>出発地</h2>
-          <h2>目的地</h2>
+          <h2 class="mb-0 ml--100">出発地</h2>
+          <h2 class="mb-0 ml-120">目的地</h2>
         </div>
         <div class="flexed-text">
           <input type="text" id="origin" name="origin" placeholder="住所" required />
-          <span>→</span>
+          <span class="ml-4 mr-4">→</span>
           <input type="text" id="destination" name="destination" placeholder="住所" required />
         </div>
-        <input type="submit" value="検索" />
+        <input class="mt-8" type="submit" value="検索" />
       </from>
     </div>
     <div class="content"></div>
