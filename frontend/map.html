@@ -7,31 +7,37 @@
   </head>
   <body>
     <header>
-      <h1>くるまっぷ</h1>
+      <a href="index.html"><h1>くるまっぷ</h1></a>
     </header>
     <main>
-      <h2><span id="origin"></span>〜<span id="destination"></span>の経路</h2>
+      <h2><span id="origin"></span>　〜　<span id="destination"></span>の経路</h2>
       <div class="container">
         <div class="means-btns">
           <button class="update" data-viecle="セグウェイ">
-            <img src="#" />セグウェイ
+            <img src="img/seg.PNG" /><span>セグウェイ</span>
           </button>
-          <button class="update" data-viecle="竹馬"><img src="#">竹馬</button>
-          <button class="update" data-viecle="かご"><img src="#">かご</button>
+          <button class="update" data-viecle="竹馬">
+            <img src="img/take.PNG" /><span>竹馬</span>
+          </button>
+          <button class="update" data-viecle="かご">
+            <img src="img/kago-2.PNG" /><span>かご</span>
+          </button>
           <button class="update" data-viecle="プテラノドン">
-            <img src="#" />プテラノドン
+            <img src="img/putera-2.PNG" /><span>プテラノドン</span>
           </button>
         </div>
         <div class="result">
           <span id="means">セグウェイ</span>だと...<span id="minutes"></span>分
         </div>
-        <div id="map" style="width:600px; height:400px"></div>
+        <div id="map"></div>
       </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="../backend/js/direction.js"></script>
     <script src="../backend/js/googlemap.js"></script>
     <script src="../backend/js/position.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIWp8l-e_B0GlwOIafv28mhb3TBwEz7XI&callback=initMap"></script>
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIWp8l-e_B0GlwOIafv28mhb3TBwEz7XI&callback=initMap"
+    ></script>
   </body>
 </html>
