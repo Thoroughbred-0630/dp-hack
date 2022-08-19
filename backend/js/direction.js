@@ -1,5 +1,7 @@
-const FROM = "恵比寿駅";
-const TO = "東京タワー"
+var FROM;
+var TO;
+//const FROM = "恵比寿駅";
+//const TO = "東京タワー"
 const TRAVELTRANS = {"セグウェイ": "DRIVING","竹馬": "WALKING", "かご": "WALKING", "プテラノドン": "PUTERANODON"};
 const WAYPOINTS = {
     "セグウェイ": [{}],
@@ -12,6 +14,8 @@ var directionsService;
 var directionsRenderer;
 var map;
 const MapUpdateDOM = document.querySelector(".update");
+const OriginDOM = document.querySelector("#origin");
+const DestinationDOM = document.querySelector("#destination");
 
 function initMap() {
     directionsService = new google.maps.DirectionsService();
@@ -40,15 +44,17 @@ function calcRoute() {
     //reset map
     directionsDisplay = new google.maps.DirectionsRenderer();
     directionsRenderer.setMap(map);
-    var start = FROM;
-    var end = TO;
-    const {waypoints, transitOptions} = routeSetting();
+    // var start = FROM;
+    //  console.log(start);
+    // var end = TO;
+    // console.log(end);
+    //const {waypoints, transitOptions} = routeSetting();
     var request = {
-        origin: start,
-        destination: end,
+        origin: OriginDOM.innerHTML,
+        destination: DestinationDOM.innerHTML,
         travelMode: TRAVELMODE,
-        waypoints: waypoints,
-        transitOptions: transitOptions
+       // waypoints: waypoints,
+       // transitOptions: transitOptions
         // transitOptions: {
         //     // departureTime: new Date(1337675679473),
         //     modes: ['TRAIN'],
@@ -66,6 +72,28 @@ function calcRoute() {
         }
     });
 }
+
+
+function getOriginDest() {
+	// URLを取得
+	const url = new URL(window.location.href);
+
+	// URLSearchParamsオブジェクトを取得
+	const params = url.searchParams;
+
+	// consoleに受け取ったパラメータを出力
+	//console.log(params);
+
+	// パラメータから「origin」と「destination」を取得
+	// start = params.get("origin");
+	// console.log(start);
+	// end = params.get("destination");
+	// console.log(end);
+    OriginDOM.innerHTML = params.get("origin");
+    DestinationDOM.innerHTML = params.get("destination");
+
+}
+
 
 MapUpdateDOM.addEventListener("click", (e) =>{
     e.preventDefault();
@@ -97,14 +125,12 @@ const routeSetting = () =>{
     waypoints = WAYPOINTS[TRAVELMODE];
     transitOptions = {}
     return {
-        waypoints: waypoints,
+        waypoints: WAYPOINTS,
         transitOptions: transitOptions,
     };
 };
 
 
 //   window.initialize = initialize;
-
-
-
+getOriginDest()
 

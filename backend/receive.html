@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>受信HTML</title>
+<script>
+        window.onload = function() {
+            // URLを取得
+            const url = new URL(window.location.href);
+
+            // URLSearchParamsオブジェクトを取得
+            const params = url.searchParams;
+
+            // consoleに受け取ったパラメータを出力
+            console.log(params);
+
+            // パラメータから「origin」と「destination」を取得
+            const origin = params.get("origin");
+            const destination = params.get("destination");
+            console.log(origin);
+            console.log(destination);
+            
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>
