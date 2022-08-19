@@ -18,6 +18,7 @@ footer {
   height: 50px;
   background-color: rgb(57, 55, 226);
   align-items: center;
+  bottom: 0;
 }
 
 .center {
