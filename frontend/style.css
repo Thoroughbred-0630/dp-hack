@@ -113,6 +113,10 @@ footer {
   margin-right: 32px !important;
 }
 
+.ml--100 {
+  margin-left: -100px !important;
+}
+
 .ml-0 {
   margin-left: 0px !important;
 }
@@ -161,8 +165,8 @@ footer {
   margin-left: 60px !important;
 }
 
-.ml-100 {
-  margin-left: 100px !important;
+.ml-120 {
+  margin-left: 120px !important;
 }
 
 .mb-0 {
