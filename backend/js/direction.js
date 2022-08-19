@@ -2,24 +2,25 @@ var FROM;
 var TO;
 //const FROM = "恵比寿駅";
 //const TO = "東京タワー"
-const TRAVELTRANS = {"セグウェイ": "DRIVING","竹馬": "WALKING", "かご": "WALKING", "プテラノドン": "PUTERANODON"};
+const TRAVELTRANS = {"セグウェイ": "DRIVING","竹馬": "WALKING", "かご": "BIKEWAY", "プテラノドン": "PUTERANODON"};
 const WAYPOINTS = {
     "セグウェイ": [{}],
     "竹馬": [{ location: "レントオールエドガワ"}],
     "かご": [{ location: "東京駅"}],
     "プテラノドン": [{ location: "東京駅"}],
 };
-const Speeds = {"セグウェイ": 1,"竹馬": 10, "かご": 20, "プテラノドン": 30};
+const Speeds = {"セグウェイ": 20,"竹馬": 2, "かご": 7, "プテラノドン": 40};
 // var TRAVELMODE = TRAVELTRANS["セグウェイ"];
 var directionsService;
 var directionsRenderer;
 var map;
+var lines;
 const MapUpdateDOM = document.querySelectorAll(".update");
 const OriginDOM = document.querySelector("#origin");
 const DestinationDOM = document.querySelector("#destination");
 const MeansDOM = document.querySelector("#means");
 const MinitusDOM = document.querySelector("#minutes");
-
+var latLng = {};
 
 var geocoder;
 
@@ -35,7 +36,8 @@ function initMap() {
 
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
     directionsRenderer.setMap(map);
-    calcRoute("セグウェイ");
+    calcPutera("プテラノドン");
+    // calcRoute("プテラノドン");
     // getPanorama(map);
     
     //sample
@@ -165,26 +167,29 @@ getOriginDest();
 const calcPutera = (viecle) => {
     // const dakota = {lat: 40.7767644, lng: -73.9761399};
     // const frick = {lat: 40.771209, lng: -73.9673991};
-    const alatlng = codeAddress(OriginDOM.innerHTML);
-    const dlatlng = codeAddress(DestinationDOM.innerHTML);
+    let pos = [];
+    codeAddress(OriginDOM.innerHTML, pos);
+    codeAddress(DestinationDOM.innerHTML, pos);
+    console.log(pos);
+   
     // originA = {lat:originAddress.lat, lng:originAddress.lng};
     // originB = {lat:departAddress.lat, lng:departAddress.lng};
-    console.log(alatlng["lat"]);
-    var pos = [
-        new google.maps.LatLng(alatlng["lat"], alatlng["lng"]),
-        new google.maps.LatLng(dlatlng["lat"], dlatlng["lng"])
-        // new google.maps.LatLng(35.5, 139.5),
-        // new google.maps.LatLng(35.5, 139.4)
+    // console.log(alat);
+    // var pos = [
+    //     new google.maps.LatLng(alatlng["lat"], alatlng["lng"]),
+    //     new google.maps.LatLng(dlatlng["lat"], dlatlng["lng"])
+    //     // new google.maps.LatLng(35.5, 139.5),
+    //     // new google.maps.LatLng(35.5, 139.4)
     
-    ];
+    // ];
 
-	for(i=0;i<pos.length;i++){
-		new google.maps.Marker({
-			position: pos[i],
-			map: map,
-			draggable: false
-		});
-	}
+	// for(i=0;i<pos.length;i++){
+	// 	new google.maps.Marker({
+	// 		position: pos[i],
+	// 		map: map,
+	// 		draggable: false
+	// 	});
+	// }
 
 	// 線を引く
 	lines = new google.maps.Polyline({
@@ -193,7 +198,8 @@ const calcPutera = (viecle) => {
 		strokeOpacity: .7,
 		strokeWeight: 7
 	});
-
+    directionsDisplay = new google.maps.DirectionsRenderer();
+    directionsRenderer.setMap(map);
 	lines.setMap(map);	
 
     // console.log(alatlng);
@@ -204,27 +210,19 @@ const calcPutera = (viecle) => {
 };
 
 
-function codeAddress(address) {
-    // var address = document.getElementById('address').value;
-    let latLng;
+function codeAddress(address, pos) {
     geocoder.geocode( { 'address': address}, function(results, status) {
       if (status == 'OK') {
 
         var ll = results[0].geometry.location;
         var glat = ll.lat();
         var glng = ll.lng();
-        console.log(glng);
-
-        // latLng["lat"] = glat;
-        // latLng["lng"] = glng;
-        latLng = {"lat": glat,"lng": glng};
-        // return latLng;
+        console.log(`${glat}, ${glng}`);
+        pos.push({lat: glat, lng: glng});
 
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
-    console.log("lat");
-    console.log(latLng["lat"]);
-    return latLng;
+
 }
