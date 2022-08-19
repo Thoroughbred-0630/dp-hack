@@ -10,6 +10,7 @@ function initMap() {
       center: tokyo
     }
     var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    
     directionsRenderer.setMap(map);
     calcRoute(directionsService, directionsRenderer);
 }
@@ -34,6 +35,7 @@ function calcRoute(directionsService, directionsRenderer) {
         }
     });
 }
+
 
 
 
