@@ -39,11 +39,11 @@ function initMap() {
     // getPanorama(map);
     
     //sample
-    new google.maps.Marker({
-        position: { lat: 35.68142790470337, lng: 139.7670604249919 },
-        map,
-        title: "Hello World!",
-      });
+    // new google.maps.Marker({
+    //     position: { lat: 35.68142790470337, lng: 139.7670604249919 },
+    //     map,
+    //     title: "Hello World!",
+    //   });
     
 }
 
@@ -118,7 +118,9 @@ function getOriginDest() {
 MapUpdateDOM.forEach(element => {
     element.addEventListener("click", (e) =>{
         e.preventDefault();
-        const viecle = e.target.dataset.viecle;
+        console.log(e.target.parentElement);
+        const viecle = e.target.parentElement.dataset.viecle;
+        console.log(viecle);
         // TRAVELMODE = TRAVELTRANS[viecle];
         if(viecle=="プテラノドン"){
             calcPutera(viecle);
@@ -163,24 +165,48 @@ getOriginDest();
 const calcPutera = (viecle) => {
     // const dakota = {lat: 40.7767644, lng: -73.9761399};
     // const frick = {lat: 40.771209, lng: -73.9673991};
-    const {lat, lng} = codeAddress(OriginDOM.innerHTML);
-    // const {lat:blat, lng:blng} = codeAddress(DestinationDOM.innerHTML);
+    const alatlng = codeAddress(OriginDOM.innerHTML);
+    const dlatlng = codeAddress(DestinationDOM.innerHTML);
     // originA = {lat:originAddress.lat, lng:originAddress.lng};
     // originB = {lat:departAddress.lat, lng:departAddress.lng};
-    console.log(lat);
+    console.log(alatlng["lat"]);
     var pos = [
-        new google.maps.LatLng(alat, alng),
-        new google.maps.LatLng(blat, blng)
+        new google.maps.LatLng(alatlng["lat"], alatlng["lng"]),
+        new google.maps.LatLng(dlatlng["lat"], dlatlng["lng"])
+        // new google.maps.LatLng(35.5, 139.5),
+        // new google.maps.LatLng(35.5, 139.4)
+    
     ];
+
+	for(i=0;i<pos.length;i++){
+		new google.maps.Marker({
+			position: pos[i],
+			map: map,
+			draggable: false
+		});
+	}
+
+	// 線を引く
+	lines = new google.maps.Polyline({
+		path: pos,
+		strokeColor: "#0067c0",
+		strokeOpacity: .7,
+		strokeWeight: 7
+	});
+
+	lines.setMap(map);	
+
+    // console.log(alatlng);
     var dist = google.maps.geometry.spherical.computeLength(pos);
     console.log("dist");
     console.log(dist);
-    // var line =  new google.maps.Polyline({path: [originA, originB], map: map});
+    // var line =  new google.maps.Polyline({path: [alatlng, dlatlng], map: map});
 };
 
 
 function codeAddress(address) {
     // var address = document.getElementById('address').value;
+    let latLng;
     geocoder.geocode( { 'address': address}, function(results, status) {
       if (status == 'OK') {
 
@@ -189,18 +215,16 @@ function codeAddress(address) {
         var glng = ll.lng();
         console.log(glng);
 
-        // console.log(results[0]);
-        return {
-            lat: glat,
-            lng: glng
-        };
-        // map.setCenter(results[0].geometry.location);
-        // var marker = new google.maps.Marker({
-        //     map: map,
-        //     position: results[0].geometry.location
-        // });
+        // latLng["lat"] = glat;
+        // latLng["lng"] = glng;
+        latLng = {"lat": glat,"lng": glng};
+        // return latLng;
+
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
+    console.log("lat");
+    console.log(latLng["lat"]);
+    return latLng;
 }
