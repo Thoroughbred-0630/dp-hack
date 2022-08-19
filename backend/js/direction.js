@@ -13,7 +13,7 @@ var TRAVELMODE = TRAVELTRANS["セグウェイ"];
 var directionsService;
 var directionsRenderer;
 var map;
-const MapUpdateDOM = document.querySelector(".update");
+const MapUpdateDOM = document.querySelectorAll(".update");
 const OriginDOM = document.querySelector("#origin");
 const DestinationDOM = document.querySelector("#destination");
 
@@ -42,6 +42,7 @@ function initMap() {
 
 function calcRoute() {
     //reset map
+    console.log("aaa");
     directionsDisplay = new google.maps.DirectionsRenderer();
     directionsRenderer.setMap(map);
     // var start = FROM;
@@ -95,12 +96,14 @@ function getOriginDest() {
 }
 
 
-MapUpdateDOM.addEventListener("click", (e) =>{
-    e.preventDefault();
-    const viecle = e.target.dataset.viecle;
-    TRAVELMODE = TRAVELTRANS[viecle];
-    calcRoute();
-}); 
+MapUpdateDOM.forEach(element => {
+    element.addEventListener("click", (e) =>{
+        e.preventDefault();
+        const viecle = e.target.dataset.viecle;
+        TRAVELMODE = TRAVELTRANS[viecle];
+        calcRoute();
+    }); 
+});
 
 function getPanorama(map) {
     const fenway = { lat: 42.345573, lng: -71.098326 };
