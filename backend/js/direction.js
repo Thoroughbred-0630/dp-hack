@@ -14,6 +14,8 @@ var directionsService;
 var directionsRenderer;
 var map;
 const MapUpdateDOM = document.querySelector(".update");
+const OriginDOM = document.querySelector("#origin");
+const DestinationDOM = document.querySelector("#destination");
 
 function initMap() {
     directionsService = new google.maps.DirectionsService();
@@ -42,14 +44,14 @@ function calcRoute() {
     //reset map
     directionsDisplay = new google.maps.DirectionsRenderer();
     directionsRenderer.setMap(map);
-    var start = FROM;
-     console.log(start);
-    var end = TO;
-    console.log(end);
+    // var start = FROM;
+    //  console.log(start);
+    // var end = TO;
+    // console.log(end);
     //const {waypoints, transitOptions} = routeSetting();
     var request = {
-        origin: start,
-        destination: end,
+        origin: OriginDOM.innerHTML,
+        destination: DestinationDOM.innerHTML,
         travelMode: TRAVELMODE,
        // waypoints: waypoints,
        // transitOptions: transitOptions
@@ -83,10 +85,13 @@ function getOriginDest() {
 	//console.log(params);
 
 	// パラメータから「origin」と「destination」を取得
-	start = params.get("origin");
-	console.log(start);
-	end = params.get("destination");
-	console.log(end);
+	// start = params.get("origin");
+	// console.log(start);
+	// end = params.get("destination");
+	// console.log(end);
+    OriginDOM.innerHTML = params.get("origin");
+    DestinationDOM.innerHTML = params.get("destination");
+
 }
 
 
