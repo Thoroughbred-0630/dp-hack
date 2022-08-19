@@ -16,8 +16,8 @@
           <button class="update" data-viecle="セグウェイ">
             <img src="#" />セグウェイ
           </button>
-          <button class="update" data-viecle="竹馬"><img src="#" />竹馬</button>
-          <button class="update" data-viecle="かご"><img src="#" />かご</button>
+          <button class="update" data-viecle="竹馬"><img src="#">竹馬</button>
+          <button class="update" data-viecle="かご"><img src="#">かご</button>
           <button class="update" data-viecle="プテラノドン">
             <img src="#" />プテラノドン
           </button>
@@ -25,8 +25,13 @@
         <div class="result">
           <span id="means">セグウェイ</span>だと...<span id="minutes"></span>分
         </div>
-        <div id="map"></div>
+        <div id="map" style="width:600px; height:400px"></div>
       </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../backend/js/direction.js"></script>
+    <script src="../backend/js/googlemap.js"></script>
+    <script src="../backend/js/position.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIWp8l-e_B0GlwOIafv28mhb3TBwEz7XI&callback=initMap"></script>
   </body>
 </html>
