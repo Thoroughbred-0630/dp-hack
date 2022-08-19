@@ -36,8 +36,8 @@ function initMap() {
 
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
     directionsRenderer.setMap(map);
-    calcPutera("プテラノドン");
-    // calcRoute("プテラノドン");
+    // calcPutera("プテラノドン");
+    calcRoute("セグウェイ");
     // getPanorama(map);
     
     //sample
@@ -175,13 +175,14 @@ const calcPutera = (viecle) => {
     // originA = {lat:originAddress.lat, lng:originAddress.lng};
     // originB = {lat:departAddress.lat, lng:departAddress.lng};
     // console.log(alat);
-    // var pos = [
+    var pos2 = [
     //     new google.maps.LatLng(alatlng["lat"], alatlng["lng"]),
     //     new google.maps.LatLng(dlatlng["lat"], dlatlng["lng"])
-    //     // new google.maps.LatLng(35.5, 139.5),
-    //     // new google.maps.LatLng(35.5, 139.4)
+        new google.maps.LatLng(35.5, 139.5),
+        new google.maps.LatLng(35.5, 139.4)
     
-    // ];
+    ];
+    console.log(pos[1]);
 
 	// for(i=0;i<pos.length;i++){
 	// 	new google.maps.Marker({
@@ -193,7 +194,7 @@ const calcPutera = (viecle) => {
 
 	// 線を引く
 	lines = new google.maps.Polyline({
-		path: pos,
+		path: pos2,
 		strokeColor: "#0067c0",
 		strokeOpacity: .7,
 		strokeWeight: 7
@@ -203,9 +204,9 @@ const calcPutera = (viecle) => {
 	lines.setMap(map);	
 
     // console.log(alatlng);
-    var dist = google.maps.geometry.spherical.computeLength(pos);
-    console.log("dist");
-    console.log(dist);
+    // var dist = google.maps.geometry.spherical.computeLength(pos2);
+    // console.log("dist");
+    // console.log(dist);
     // var line =  new google.maps.Polyline({path: [alatlng, dlatlng], map: map});
 };
 
