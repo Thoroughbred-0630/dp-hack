@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="map.css" />
+    <title>くるまっぷ</title>
+  </head>
+  <body>
+    <header>
+      <h1>くるまっぷ</h1>
+    </header>
+    <main>
+      <h2><span id="origin"></span>〜<span id="destination"></span>の経路</h2>
+      <div class="container">
+        <div class="means-btns">
+          <button class="update" data-viecle="セグウェイ">
+            <img src="#" />セグウェイ
+          </button>
+          <button class="update" data-viecle="竹馬"><img src="#" />竹馬</button>
+          <button class="update" data-viecle="かご"><img src="#" />かご</button>
+          <button class="update" data-viecle="プテラノドン">
+            <img src="#" />プテラノドン
+          </button>
+        </div>
+        <div class="result">
+          <span id="means">セグウェイ</span>だと...<span id="minutes"></span>分
+        </div>
+        <div id="map"></div>
+      </div>
+    </main>
+  </body>
+</html>
