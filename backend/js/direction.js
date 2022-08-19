@@ -23,6 +23,7 @@ function initMap() {
       zoom:15,
     //   center: tokyo
     }
+
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
     directionsRenderer.setMap(map);
     calcRoute();
@@ -83,7 +84,7 @@ function getOriginDest() {
 	start = params.get("origin");
 	console.log(start);
 	end = params.get("destination");
-	console.log(destination);
+	console.log(end);
 
 }
 
@@ -127,4 +128,3 @@ const routeSetting = () =>{
 //   window.initialize = initialize;
 
 
-getOriginDest()

@@ -1,11 +1,27 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
 .flexed-text {
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+
+header {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  background-color: rgb(57, 55, 226);
+  align-items: center;
+}
+
+footer {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  background-color: rgb(57, 55, 226);
+  align-items: center;
+}
+
+.center {
+  text-align: center;
 }
 
 .mt-0 {
@@ -142,6 +158,10 @@
 
 .ml-60 {
   margin-left: 60px !important;
+}
+
+.ml-100 {
+  margin-left: 100px !important;
 }
 
 .mb-0 {
