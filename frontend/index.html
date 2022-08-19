@@ -8,22 +8,28 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header>くるまっぷ</header>
+    <header>
+      <h1><a href="index.html">くるまっぷ</a></h1>
+    </header>
     <div class="center">
-      <form action="./map.html">
-        <div class="flexed-text">
-          <h2 class="mb-0 ml--100">出発地</h2>
-          <h2 class="mb-0 ml-120">目的地</h2>
-        </div>
-        <div class="flexed-text">
-          <input type="text" id="origin" name="origin" placeholder="住所" required />
-          <span class="ml-4 mr-4">→</span>
-          <input type="text" id="destination" name="destination" placeholder="住所" required />
-        </div>
-        <input type="submit" value="検索" />
-      </form>
+      <div class="box">
+        <form action="./map.html">
+          <div class="flexed-text">
+            <div>
+              <h2 class="mb-0" style="text-align: left">出発地</h2>
+              <input type="text" id="origin" name="origin" placeholder="場所" required />
+            </div>
+            <span class="ml-4 mr-4 mt-60">→</span>
+            <div>
+              <h2 class="mb-0" style="text-align: left">目的地</h2>
+              <input type="text" id="destination" name="destination" placeholder="場所" required />
+            </div>
+          </div>
+          <input class="btn-search" type="submit" value="検索" />
+        </form>
+      </div>
     </div>
     <div class="content"></div>
-    <footer></footer>
+    <footer>&copy;dp_hack</footer>
   </body>
 </html>
