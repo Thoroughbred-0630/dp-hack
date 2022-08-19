@@ -43,7 +43,9 @@ function calcRoute() {
     directionsDisplay = new google.maps.DirectionsRenderer();
     directionsRenderer.setMap(map);
     var start = FROM;
+     console.log(start);
     var end = TO;
+    console.log(end);
     //const {waypoints, transitOptions} = routeSetting();
     var request = {
         origin: start,
@@ -85,7 +87,6 @@ function getOriginDest() {
 	console.log(start);
 	end = params.get("destination");
 	console.log(end);
-
 }
 
 
@@ -126,5 +127,5 @@ const routeSetting = () =>{
 
 
 //   window.initialize = initialize;
-
+getOriginDest()
 
