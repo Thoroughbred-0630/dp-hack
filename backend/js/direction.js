@@ -29,7 +29,7 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
     directionsRenderer.setMap(map);
     calcRoute();
-    getPanorama(map);
+    // getPanorama(map);
     
     //sample
     new google.maps.Marker({
