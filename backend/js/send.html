@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>送信元のHTML</title>
+    <style>
+        form,p {
+            margin: 1em;
+            border: solid 1px #a4a4a4;
+            padding: 1em;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h3>フォームを用いた遷移</h3>
+    <form action="./index.html" method="GET">
+        <div>出発地点</div>
+        <input type="text" name="origin">
+        <div>目的地</div>
+        <input type="text" name="destination">
+        <input type="submit" value="送信">
+    </form>
+</body>
+</html>
