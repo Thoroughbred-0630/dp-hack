@@ -177,7 +177,10 @@ function calcPutera(viecle){
 			position: pos[i],
 			map: map,
 			draggable: false,
-            label :LABELS[i]
+            label :{
+                color: '#FFFFFF',
+                text: LABELS[i]
+            }
 		}));
 	}
     console.log(pos);
