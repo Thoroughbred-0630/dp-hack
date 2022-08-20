@@ -14,14 +14,22 @@
     </header>
     <main>
       <h2><span id="origin"></span>　〜　<span id="destination"></span>の経路</h2>
+      <div class="result">
+        <span id="means">セグウェイ</span>だと... <span id="minutes"></span>で着きます！
+      </div>
       <div class="container">
+        
+        <div id="map"></div>
         <div class="means-btns">
+          <div class="means-btns-box">
           <button class="update" data-viecle="セグウェイ">
             <img src="img/seg.PNG" /><span>セグウェイ</span>
           </button>
           <button class="update" data-viecle="竹馬">
             <img src="img/take.PNG" /><span>竹馬</span>
           </button>
+          </div>
+        <div class="means-btns-box">
           <button class="update" data-viecle="かご">
             <img src="img/kago-2.PNG" /><span>かご</span>
           </button>
@@ -29,10 +37,7 @@
             <img src="img/putera-2.PNG" /><span>プテラノドン</span>
           </button>
         </div>
-        <div class="result">
-          <span id="means">セグウェイ</span>だと... <span id="minutes"></span>で着きます！
-        </div>
-        <div id="map"></div>
+        
       </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
