@@ -3,6 +3,7 @@ require("dotenv").config();
 
 const app = exporess();
 const PORT = process.env.PORT | 5000;
+console.log(PORT);
 console.log(`access port ${PORT}`);
 app.use(exporess.json());
 app.use(exporess.static("./frontend"));
