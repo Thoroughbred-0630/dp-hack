@@ -8,7 +8,7 @@ const WAYPOINTS = {
     "かご": [{ location: "東京駅"}],
     "プテラノドン": [{ location: "東京駅"}],
 };
-const Speeds = {"セグウェイ": 20,"竹馬": 2, "かご": 7, "プテラノドン": 40};
+const Speeds = {"セグウェイ": 5.56,"竹馬": 0.556, "かご": 1.94, "プテラノドン": 11.1};
 
 var directionsService;
 var directionsRenderer;
