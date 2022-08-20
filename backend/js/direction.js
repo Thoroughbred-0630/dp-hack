@@ -1,7 +1,6 @@
-var FROM;
-var TO;
-//const FROM = "恵比寿駅";
-//const TO = "東京タワー"
+var ORIGIN;
+var DESTINATION;
+const LABELS = "ABCD";
 const TRAVELTRANS = {"セグウェイ": "DRIVING","竹馬": "WALKING", "かご": "BICYCLING", "プテラノドン": "PUTERANODON"};
 const WAYPOINTS = {
     "セグウェイ": [{}],
@@ -10,17 +9,21 @@ const WAYPOINTS = {
     "プテラノドン": [{ location: "東京駅"}],
 };
 const Speeds = {"セグウェイ": 20,"竹馬": 2, "かご": 7, "プテラノドン": 40};
-// var TRAVELMODE = TRAVELTRANS["セグウェイ"];
+
 var directionsService;
 var directionsRenderer;
+//objects
 var map;
 var lines;
+var markers = [];
+
 const MapUpdateDOM = document.querySelectorAll(".update");
 const OriginDOM = document.querySelector("#origin");
 const DestinationDOM = document.querySelector("#destination");
 const MeansDOM = document.querySelector("#means");
 const MinitusDOM = document.querySelector("#minutes");
-var latLng = {};
+var originGEO;
+var destinationGEO;
 
 var geocoder;
 
@@ -28,69 +31,48 @@ function initMap() {
     geocoder = new google.maps.Geocoder();
     directionsService = new google.maps.DirectionsService();
     directionsRenderer = new google.maps.DirectionsRenderer();
-    // var tokyo = new google.maps.LatLng(35.68142790470337, 139.7670604249919);
+    lines = null;
+
     var mapOptions = {
       zoom:15,
-    //   center: tokyo
     }
 
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
     directionsRenderer.setMap(map);
-    // calcPutera("プテラノドン");
+    ORIGIN = OriginDOM.innerHTML
+    DESTINATION = DestinationDOM.innerHTML;
+    // if(ORIGIN=="現在地"){
+    //     positionMap();
+    // }else{
+    // }
+    codeAddress1(ORIGIN);
+    codeAddress2(DESTINATION);
     calcRoute("セグウェイ");
     // getPanorama(map);
-    
-    //sample
-    // new google.maps.Marker({
-    //     position: { lat: 35.68142790470337, lng: 139.7670604249919 },
-    //     map,
-    //     title: "Hello World!",
-    //   });
     
 }
 
 function calcRoute(viecle) {
-    //reset map
-    directionsDisplay = new google.maps.DirectionsRenderer();
-    directionsRenderer.setMap(map);
-    // var start = FROM;
-    //  console.log(start);
-    // var end = TO;
-    // console.log(end);
+    resetDirections();
     const {waypoints, transitOptions} = routeSetting(viecle);
     var request = {
-        origin: OriginDOM.innerHTML,
-        destination: DestinationDOM.innerHTML,
+        origin: ORIGIN,
+        destination: DESTINATION,
         travelMode: TRAVELTRANS[viecle],
-       // waypoints: waypoints,
-       // transitOptions: transitOptions
-        // transitOptions: {
-        //     // departureTime: new Date(1337675679473),
-        //     modes: ['TRAIN'],
-        //     // routingPreference: 'FEWER_TRANSFERS'
-        // },
+        // waypoints,
+        // transitOptions
         };
     directionsService.route(request, function(result, status) {
         if (status == 'OK') {
             const {routes} = result;
             const LatLngs = routes[0].legs[0].distance
-            console.log(LatLngs);
-            // console.log(routes[0]);
-            console.log(routes[0]);
             let sec = 1.0*LatLngs.value / Speeds[viecle];
 
-            let day = Math.floor(sec / 86400);
-            let hour = Math.floor(sec % 86400 / 3600);
-            let min = Math.floor(sec % 3600 / 60);
-            let rem = sec % 60;
-            
-            console.log(`${day}日${hour}時間${min}分${rem}秒`);
-            time = `${min}分`;
-            if (hour != 0 ) time = `${hour}時間` + time;
-            if (day != 0 ) time = `${day}時間` + time;
+            time = convertSecToTime(sec);
             MinitusDOM.innerHTML = time;
             MeansDOM.innerHTML = viecle;
             directionsRenderer.setDirections(result);
+            directionsRenderer.setMap(map);
         }
     });
 }
@@ -107,12 +89,9 @@ function getOriginDest() {
 	//console.log(params);
 
 	// パラメータから「origin」と「destination」を取得
-	// start = params.get("origin");
-	// console.log(start);
-	// end = params.get("destination");
-	// console.log(end);
     OriginDOM.innerHTML = params.get("origin");
     DestinationDOM.innerHTML = params.get("destination");
+
 
 }
 
@@ -122,8 +101,6 @@ MapUpdateDOM.forEach(element => {
         e.preventDefault();
         console.log(e.target.parentElement);
         const viecle = e.target.parentElement.dataset.viecle;
-        console.log(viecle);
-        // TRAVELMODE = TRAVELTRANS[viecle];
         if(viecle=="プテラノドン"){
             calcPutera(viecle);
         }else{
@@ -134,10 +111,7 @@ MapUpdateDOM.forEach(element => {
 
 function getPanorama(map) {
     const fenway = { lat: 42.345573, lng: -71.098326 };
-    // const map = new google.maps.Map(document.getElementById("map"), {
-    //   center: fenway,
-    //   zoom: 14,
-    // });
+
     const panorama = new google.maps.StreetViewPanorama(
       document.getElementById("pano"),
       {
@@ -160,70 +134,125 @@ const routeSetting = (viecle) =>{
     };
 };
 
-
-//   window.initialize = initialize;
 getOriginDest();
 
-const calcPutera = (viecle) => {
-    // const dakota = {lat: 40.7767644, lng: -73.9761399};
-    // const frick = {lat: 40.771209, lng: -73.9673991};
-    let pos = [];
-    codeAddress(OriginDOM.innerHTML, pos);
-    codeAddress(DestinationDOM.innerHTML, pos);
-    console.log(pos);
-   
-    // originA = {lat:originAddress.lat, lng:originAddress.lng};
-    // originB = {lat:departAddress.lat, lng:departAddress.lng};
-    // console.log(alat);
-    var pos2 = [
-    //     new google.maps.LatLng(alatlng["lat"], alatlng["lng"]),
-    //     new google.maps.LatLng(dlatlng["lat"], dlatlng["lng"])
-        new google.maps.LatLng(35.5, 139.5),
-        new google.maps.LatLng(35.5, 139.4)
-    
-    ];
-    console.log(pos[1]);
+function codeAddress1(address, geo){
+    var op = geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == 'OK') {
+            var ll = results[0].geometry.location;
+            glat = ll.lat();
+            glng = ll.lng();
+            originGEO = {"lat": glat, "lng": glng};
 
-	// for(i=0;i<pos.length;i++){
-	// 	new google.maps.Marker({
-	// 		position: pos[i],
-	// 		map: map,
-	// 		draggable: false
-	// 	});
-	// }
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
 
-	// 線を引く
-	lines = new google.maps.Polyline({
-		path: pos2,
-		strokeColor: "#0067c0",
-		strokeOpacity: .7,
-		strokeWeight: 7
-	});
-    directionsDisplay = new google.maps.DirectionsRenderer();
-    directionsRenderer.setMap(map);
-	lines.setMap(map);	
+}
 
-    // console.log(alatlng);
-    // var dist = google.maps.geometry.spherical.computeLength(pos2);
-    // console.log("dist");
-    // console.log(dist);
-    // var line =  new google.maps.Polyline({path: [alatlng, dlatlng], map: map});
-};
-
-
-function codeAddress(address, pos) {
+function codeAddress2(address){
     geocoder.geocode( { 'address': address}, function(results, status) {
       if (status == 'OK') {
-
         var ll = results[0].geometry.location;
         var glat = ll.lat();
         var glng = ll.lng();
-        console.log(`${glat}, ${glng}`);
-        pos.push({lat: glat, lng: glng});
-
+        destinationGEO = {"lat": glat, "lng": glng};
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
-
 }
+
+
+function calcPutera(viecle){
+    resetDirections();
+    var pos = [
+            originGEO,
+            destinationGEO
+        ];
+
+	for(i=0;i<pos.length;i++){
+		markers.push(new google.maps.Marker({
+			position: pos[i],
+			map: map,
+			draggable: false,
+            label :LABELS[i]
+		}));
+	}
+    console.log(pos);
+
+	// 線を引く
+	lines = new google.maps.Polyline({
+		path: pos,
+		strokeColor: "#0067c0",
+		strokeOpacity: .7,
+		strokeWeight: 7
+	});
+
+	lines.setMap(map);	
+
+    let dist = google.maps.geometry.spherical.computeLength(
+        [
+        new google.maps.LatLng(originGEO["lat"], originGEO["lng"]),
+        new google.maps.LatLng(destinationGEO["lat"], destinationGEO["lng"])
+        ]
+    );
+    let sec = 1.0 + dist / Speeds[viecle];
+    MinitusDOM.innerHTML = time;
+    MeansDOM.innerHTML = viecle;
+};
+
+function resetDirections(){
+    if(directionsRenderer != null){
+        directionsRenderer.setMap(null);
+    }
+    if(lines != null){
+        lines.setMap(null);	
+    }
+    markers.forEach((marker)=> {
+        marker.setMap(null);
+    });
+    markers = [];
+}
+
+
+function convertSecToTime(sec){
+    let day = Math.floor(sec / 86400);
+    let hour = Math.floor(sec % 86400 / 3600);
+    let min = Math.floor(sec % 3600 / 60);
+    let rem = sec % 60;
+    
+    console.log(`${day}日${hour}時間${min}分${rem}秒`);
+    time = `${min}分`;
+    if (hour != 0 ) time = `${hour}時間` + time;
+    if (day != 0 ) time = `${day}時間` + time;
+    return time;
+}
+
+// function positionMap() {
+
+//     navigator.geolocation.getCurrentPosition(function(position) {
+//         // 緯度経度の取得
+//         console.log(position);
+//         let glat = position.coords.latitude;
+//         let glng = position.coords.longitude;
+//         originGEO = {"lat": glat, "lng": glng};
+//         let latlng = new google.maps.LatLng(glat, glng);
+//         geocoder.geocode( { 'latLng': latlng}, function(results, status) {
+//             if (status == 'OK') {
+//               var ll = results[0].geometry.location;
+//             //   console.log(results[0].formatted_address);
+//               ORIGIN = results[0].formatted_address;
+
+//             } else {
+//               alert('Geocode was not successful for the following reason: ' + status);
+//             }
+//           });
+//         // latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+//     }, function() {
+//         alert('位置情報取得に失敗しました');
+//     });
+// }
+
