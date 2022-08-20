@@ -48,9 +48,12 @@ h2 {
 }
 
 .container {
-  width: 800px;
+  display: flex;
+  flex-direction: row;
+  width: 900px;
   margin: 0 auto;
 }
+
 
 #map {
   width: 100%;
@@ -60,10 +63,17 @@ h2 {
 
 .means-btns {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   margin-bottom: 20px;
+  margin-left: 50px;
 }
+.means-btns-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 
 .update {
   cursor: pointer;
@@ -71,7 +81,7 @@ h2 {
   flex-direction: column;
   align-items: center;
   background-color: #fff;
-  width: 100px;
+  width: 150px;
   padding: 10px;
   margin: 0 20px;
   border: none;
@@ -84,7 +94,7 @@ h2 {
 }
 
 .update > img {
-  width: 80px;
+  width: 130px;
 }
 
 .update[data-viecle='セグウェイ'] {
